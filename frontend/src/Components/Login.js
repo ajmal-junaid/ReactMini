@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-//import {useDispatch,useSelector} from 'react-redux'
-//import {actions} from '../globalState/index'
+import { useDispatch } from 'react-redux'
+import {userLogin} from "../redux/username"
 import './SignUp.css'
 import axios from '../axios'
 const Login = () => {
@@ -9,21 +9,20 @@ const Login = () => {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('');
   const navigate = useNavigate()
-  //const user = useSelector((data)=>data)
-  //console.log(user,"userrr");
-  //const dispatch = useDispatch();
+  const dispatch = useDispatch();
   useEffect(() => {
-    const auth = localStorage.getItem('user')
+    const auth = localStorage.getItem('auth')
     if (auth) {
       navigate('/')
+      
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  const formSubmit = () => {
+  const FormSubmit = () => {
     if (!email || !password) {
       setError(true)
       return false
     }
+    
     axios({
       method: 'post',
       url: 'http://localhost:3000/login',
@@ -32,20 +31,23 @@ const Login = () => {
         password
       }
     }).then((response) => {
-      
       if (response.data.auth) {
         console.log(response.data, "responseeeeeeeeeloginnnnn");
+        dispatch(userLogin({userData:email}))
         localStorage.setItem("usertoken", JSON.stringify(response.data.token))
         localStorage.setItem("auth", JSON.stringify(response.data.auth))
+        
         navigate('/')
       } else {
         console.log(response.data, "kkkkkkkkkkkkkkkkkkkk");
         alert(response.data)
       }
     })
+    
   }
   return (
     <div>
+      
       <section className="vh-100 bg-image container-fluid">
         <div className="mask d-flex align-items-center h-100 gradient-custom-3">
           <div className="container h-100">
@@ -71,7 +73,7 @@ const Login = () => {
                       {error && !password && <p className="text-danger d-block">Enter valid password</p>}
                     </div>
                     <div className="d-flex justify-content-center">
-                      <button type="button" onClick={formSubmit}
+                      <button type="button" onClick={FormSubmit}
                         className="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Login</button>
                     </div>
 

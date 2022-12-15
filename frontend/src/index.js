@@ -1,17 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-// import { Provider } from 'react-redux';
-// import globalState from './globalState'
+import { Provider } from 'react-redux';
+import Store from "./redux/store"
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  //<Provider globalState={globalState}>
   <React.StrictMode>
+    <Provider store={Store}>
     <App />
+  </Provider>
   </React.StrictMode>
-  //</Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

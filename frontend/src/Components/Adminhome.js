@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { baseUrl } from "../constants/constants";
-import { Link } from "react-router-dom";
+import { Link,Outlet } from "react-router-dom";
 const Adminhome = () => {
     const [users, setUsers] = useState([]);
     useEffect(() => {
@@ -85,7 +85,7 @@ const Adminhome = () => {
 
                 }
             </table>
-
+<Outlet/>
         </div>
     )
 }
