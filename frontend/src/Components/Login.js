@@ -36,7 +36,6 @@ const Login = () => {
         dispatch(userLogin({userData:email}))
         localStorage.setItem("usertoken", JSON.stringify(response.data.token))
         localStorage.setItem("auth", JSON.stringify(response.data.auth))
-        localStorage.setItem("name",response.data.name)
         
         navigate('/')
       } else {

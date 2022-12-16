@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
+import { userLogin } from "../redux/username"
 
 import axios from '../axios'
 import './SignUp.css'
@@ -8,6 +10,8 @@ const SignUp = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = React.useState(false);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     useEffect(() => {
         const auth = localStorage.getItem('user');
         if (auth) {
@@ -15,7 +19,7 @@ const SignUp = () => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-    const navigate = useNavigate();
+
     const formSubmit = () => {
         if (!name || !email || !password) {
             setError(true)
@@ -30,12 +34,12 @@ const SignUp = () => {
                 password
             }
         }).then((res) => {
-            console.log(res.data, "lklklklklklkl");
             localStorage.setItem("usertoken", JSON.stringify(res.data.token))
             localStorage.setItem("auth", JSON.stringify(res.data.auth))
-            return (
-                navigate('/')
-            )
+            dispatch(userLogin({ userData: email }))
+            console.log(res.data, "responseeeeeeeeeee signupo");
+            navigate('/')
+
         }
 
         )

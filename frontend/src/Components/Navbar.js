@@ -1,19 +1,29 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { userLogin } from "../redux/username"
+import jwt_decode from "jwt-decode";
+
 const Navbar = () => {
   const userdata = useSelector((state) => state.userdata.value);
   const auth = localStorage.getItem("usertoken");
   const admauth = localStorage.getItem("admin");
   const navigate = useNavigate();
-  //const userdata = useSelector((state)=>state?.value)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    let token = localStorage.getItem('usertoken')
+    console.log(token, "useeffecttttttttttttttt");
+    let {user} = jwt_decode(token);
+    console.log(user, "next oneeeeeeeee");
+    dispatch(userLogin({ userData: user?.name }))
+  }, [])
 
   const logout = () => {
     localStorage.clear();
     navigate("/login");
   };
-  console.log(userdata, "userer++object");
+  
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -72,7 +82,7 @@ const Navbar = () => {
             {auth ? (
               <span className="navbar-text">
                 {" "}
-                <Link className="nav-link" onClick={logout} to="/signup">
+                <Link className="nav-link" onClick={logout} to="/">
                   Logout ( <b>{userdata}</b> )
                 </Link>{" "}
               </span>

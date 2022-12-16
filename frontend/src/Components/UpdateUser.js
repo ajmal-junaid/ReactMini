@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { baseUrlAdmin } from "../constants/constants";
-
 import axios from '../axios'
 import './SignUp.css'
 const UpdateUser = () => {

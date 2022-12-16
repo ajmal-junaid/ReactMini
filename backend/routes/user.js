@@ -26,20 +26,21 @@ function verifyUser(req, res, next) {
 
 
 router.post("/register", async (req, res) => {
-    let user = new User(req.body);
-    let result = await user.save()
-    result = result.toObject();
-    delete result.password;
-    Jwt.sign({ result }, jwtKey, { expiresIn: "2h" }, (err, token) => {
+    let result = new User(req.body);
+    let user = await result.save()
+    user = user.toObject();
+    delete user.password;
+    console.log(user,"sogggggggggggggggggggggggggnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnupppppppppppppp");
+    Jwt.sign({ user }, jwtKey, { expiresIn: 86400 }, (err, token) => {
         if (err) {
-            console.log(err, "iam token err");
             res.send({ auth: "false", message: "something went wrong token err" })
+        }else{
+            console.log(token, "from tokennnnnnnnnnn");
+            res.send({ auth: true, token: token })
         }
-        console.log(token, "from tokennnnnnnnnnn");
-        res.send({ auth: true, token: token })
+        
     })
     //res.send(result)
-    console.log(req.body, "opopo", result);
 })
 
 router.post("/login", async (req, res) => {
@@ -49,12 +50,13 @@ router.post("/login", async (req, res) => {
         //if true create token
         //send token response
         let user = await User.findOne(req.body).select("-password")
+        console.log(user,"llllllllllloooooogin");
         if (user) {
             Jwt.sign({ user }, jwtKey, { expiresIn: 86400 }, (err, token) => {
                 if (err) {
                     res.send({ auth: "false", message: "something went wrong token err" })
                 } else {
-                    res.send({ auth: true, token: token, name: user.name })
+                    res.send({ auth: true, token: token })
                 }
 
             })
