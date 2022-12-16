@@ -15,7 +15,6 @@ function HomePage() {
             authorization:`bearer ${JSON.parse(localStorage.getItem('usertoken'))}`
           }
       }).then((data) =>
-          //console.log(data.data,"dataaaaaaaaaa")
           setProducts(data.data)
       )
 

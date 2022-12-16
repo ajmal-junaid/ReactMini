@@ -1,55 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import {userLogin} from "../redux/username"
-import './SignUp.css'
-import axios from '../axios'
-const Login = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('');
-  const navigate = useNavigate()
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const auth = localStorage.getItem('auth')
-    if (auth) {
-      navigate('/')
-      
-    }
-  }, [])
-  const FormSubmit = () => {
-    if (!email || !password) {
-      setError(true)
-      return false
-    }
-    
-    axios({
-      method: 'post',
-      url: 'http://localhost:3000/login',
-      data: {
-        email,
-        password
-      }
-    }).then((response) => {
-      if (response.data.auth) {
-        console.log(response.data, "responseeeeeeeeeloginnnnn");
-        dispatch(userLogin({userData:email}))
-        localStorage.setItem("usertoken", JSON.stringify(response.data.token))
-        localStorage.setItem("auth", JSON.stringify(response.data.auth))
-        localStorage.setItem("name",response.data.name)
-        
-        navigate('/')
-      } else {
-        console.log(response.data, "kkkkkkkkkkkkkkkkkkkk");
-        alert(response.data)
-      }
-    })
-    
-  }
-  return (
-    <div>
-      
-      <section className="vh-100 bg-image container-fluid">
+
+
+
+<section className="vh-100 bg-image container-fluid">
         <div className="mask d-flex align-items-center h-100 gradient-custom-3">
           <div className="container h-100">
             <div className="row d-flex justify-content-center align-items-center h-100">
@@ -87,8 +39,3 @@ const Login = () => {
           </div>
         </div>
       </section>
-    </div>
-  )
-}
-
-export default Login

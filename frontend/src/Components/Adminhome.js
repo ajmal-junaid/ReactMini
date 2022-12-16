@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { baseUrl } from "../constants/constants";
+import { baseUrlAdmin } from "../constants/constants";
 import { Link,Outlet } from "react-router-dom";
 const Adminhome = () => {
     const [users, setUsers] = useState([]);
@@ -10,7 +10,7 @@ const Adminhome = () => {
     const getUsers = () => {
         axios({
             method: 'get',
-            url: `${baseUrl}getusers`
+            url: `${baseUrlAdmin}getusers`
         }).then(async (data) =>
             setUsers(data.data)
         )
@@ -19,7 +19,7 @@ const Adminhome = () => {
         console.log(id, "iddddddddddd");
         axios({
             method: 'delete',
-            url: `${baseUrl}deleteuser/${id}`
+            url: `${baseUrlAdmin}deleteuser/${id}`
         }).then((result) => {
             console.log(result.data, "rsuuuuuuuuuuuuuuu");
             if (result.data.deletedCount === 1) {
@@ -38,7 +38,7 @@ const Adminhome = () => {
         } else {
             axios({
                 method: 'get',
-                url: `${baseUrl}adminsearch/${key}`
+                url: `${baseUrlAdmin}search/${key}`
             }).then((result) => {
                 if (result) {
                     setUsers(result.data)

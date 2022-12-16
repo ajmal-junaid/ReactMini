@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom'
 import '../constants/constants'
-import { baseUrl } from "../constants/constants";
+import { baseUrlAdmin } from "../constants/constants";
 const Admlogin = () => {
     const [username, setUserName] = useState('')
     const [password, setPassword] = useState('')
@@ -15,7 +15,7 @@ const Admlogin = () => {
         }
         axios({
             method: 'post',
-            url: `${baseUrl}adminlogin`,
+            url: `${baseUrlAdmin}login`,
             data: {
                 username,
                 password

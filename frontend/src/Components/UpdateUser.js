@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useParams,useNavigate } from "react-router-dom";
-import { baseUrl } from "../constants/constants";
+import { useParams, useNavigate } from "react-router-dom";
+import { baseUrlAdmin } from "../constants/constants";
 
 import axios from '../axios'
 import './SignUp.css'
@@ -15,10 +15,10 @@ const UpdateUser = () => {
     }, [])
 
     const getUserDetails = () => {
-        console.warn(params,"params")
+        console.warn(params, "params")
         axios({
             method: 'get',
-            url: `${baseUrl}adminupdate/${params.id}`
+            url: `${baseUrlAdmin}update/${params.id}`
         }).then((result) => {
             console.log(result.data, "popopo");
             setName(result.data.name)
@@ -29,15 +29,15 @@ const UpdateUser = () => {
     const formSubmit = () => {
         axios({
             method: 'put',
-            url: `${baseUrl}adminupdate/${params.id}`,
-            data:{name,email}
-        }).then((result)=>{
-            console.log(result,"updatef succcesss");
-            if(result){
-            navigate('/adminhome')
-        }else{
-            alert("no actions")
-        }
+            url: `${baseUrlAdmin}update/${params.id}`,
+            data: { name, email }
+        }).then((result) => {
+            console.log(result, "updatef succcesss");
+            if (result) {
+                navigate('/adminhome')
+            } else {
+                alert("no actions")
+            }
         })
     }
     return (
@@ -55,14 +55,14 @@ const UpdateUser = () => {
                                             <input type="text" id="form3Example1cg" value={name} onChange={(e) =>
                                                 setName(e.target.value)} className="form-control form-control-lg" />
                                             <label className="form-label" for="form3Example1cg">Your Name</label>
-                                             </div>
+                                        </div>
 
                                         <div className="form-outline mb-4">
                                             <input type="email" id="form3Example3cg" value={email} onChange={(e) =>
                                                 setEmail(e.target.value)
                                             } className="form-control form-control-lg" />
                                             <label className="form-label" for="form3Example3cg">Your Email</label>
-                                              </div>
+                                        </div>
                                         <div className="d-flex justify-content-center">
                                             <button type="button" onClick={formSubmit}
                                                 className="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Update</button>
