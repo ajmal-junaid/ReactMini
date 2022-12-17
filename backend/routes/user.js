@@ -21,6 +21,7 @@ function verifyUser(req, res, next) {
             }
         })
     } else {
+        console.log(token, "tokkkkk");
         res.send({ msg: "send token" })
     }
 }
@@ -59,7 +60,7 @@ router.post("/login", async (req, res) => {
         //verify password,
         //if true create token
         //send token response
-        let user = await User.findOne({email:req.body.email})
+        let user = await User.findOne({ email: req.body.email })
         console.log(user, "llllllllllloooooogin");
         if (user) {
             bcrypt.compare(req.body.password, user.password).then((status) => {
@@ -95,6 +96,12 @@ router.get("/get-products", verifyUser, async (req, res) => {
     res.send(result)
 })
 
+router.post("/profile", async (req, res) => {
+    console.log(req.body, "bodyyyyyy")
+    ab = await req
+    console.log(req, "mfilessssssssss", ab, "mmmmmmmmmmmmmm");
+    res.send({ message: "result" })
+})
 
 
 module.exports = router

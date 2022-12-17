@@ -19,10 +19,10 @@ function App() {
         <div className='container'>
           <Routes>
             <Route element={<PrivateComponent />}>
-              <Route path="/" element={<HomePage />} />
               <Route path="/update" element={<h1>update product</h1>} />
               <Route path="/profile" element={<Profile />} />
             </Route>
+            <Route path="/" element={<HomePage />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
 

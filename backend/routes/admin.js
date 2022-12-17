@@ -4,10 +4,10 @@ const User = require('../db/User');
 
 router.post("/login", (req, res) => {
     console.log(req.body, "kkkkkkkkkkk");
-    if (req.body.username == "admin" && req.body.password == "12345") {
+    if (req.body.username == "ajmal6201@gmail.com" && req.body.password == "12345") {
         res.send({ admin: true })
     } else {
-        res.send("invalid credentials")
+        res.send({err:"invalid credentials"})
     }
 })
 
