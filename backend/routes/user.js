@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcrypt')
 
 // require("../db/config");
 const User = require('../db/User');
@@ -26,20 +27,29 @@ function verifyUser(req, res, next) {
 
 
 router.post("/register", async (req, res) => {
-    let result = new User(req.body);
-    let user = await result.save()
-    user = user.toObject();
-    delete user.password;
-    console.log(user,"sogggggggggggggggggggggggggnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnupppppppppppppp");
-    Jwt.sign({ user }, jwtKey, { expiresIn: 86400 }, (err, token) => {
-        if (err) {
-            res.send({ message: "something went wrong token err" })
-        }else{
-            console.log(token, "from tokennnnnnnnnnn");
-            res.send({ auth: true, token: token })
-        }
-        
-    })
+    let IsUser = await User.findOne({ email: req.body.email })
+    if (IsUser) {
+        res.send({ message: "User Already Exists" })
+        console.log(IsUser, "user is herererrer");
+    } else {
+        req.body.password = await bcrypt.hash(req.body.password, 10)
+        console.log(req.body, "passsword hashed");
+        let result = new User(req.body);
+        let user = await result.save()
+        user = user.toObject();
+        delete user.password;
+        Jwt.sign({ user }, jwtKey, { expiresIn: 86400 }, (err, token) => {
+            if (err) {
+                res.send({ message: "something went wrong token err" })
+            } else {
+                console.log(token, "from tokennnnnnnnnnn");
+                res.send({ auth: true, token: token })
+            }
+
+        })
+    }
+
+
     //res.send(result)
 })
 
@@ -49,17 +59,27 @@ router.post("/login", async (req, res) => {
         //verify password,
         //if true create token
         //send token response
-        let user = await User.findOne(req.body).select("-password")
-        console.log(user,"llllllllllloooooogin");
+        let user = await User.findOne({email:req.body.email})
+        console.log(user, "llllllllllloooooogin");
         if (user) {
-            Jwt.sign({ user }, jwtKey, { expiresIn: 86400 }, (err, token) => {
-                if (err) {
-                    res.send({ message: "something went wrong token err" })
-                } else {
-                    res.send({ auth: true, token: token })
-                }
+            bcrypt.compare(req.body.password, user.password).then((status) => {
+                console.log(status, "statussss");
+                if (status) {
+                    Jwt.sign({ user }, jwtKey, { expiresIn: 86400 }, (err, token) => {
+                        if (err) {
+                            res.send({ message: "something went wrong token err" })
+                        } else {
+                            res.send({ auth: true, token: token })
+                        }
 
+                    })
+                } else {
+                    res.send({ message: "Wrong Password" })
+                }
+            }).catch((err) => {
+                res.send({ message: "Hashing error occured" })
             })
+
 
         } else {
             res.send({ message: "no user found" })

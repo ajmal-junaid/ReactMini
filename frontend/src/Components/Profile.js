@@ -5,6 +5,23 @@ import './Profile.css'
 function Profile() {
     const userdata = useSelector((state) => state.userdata.value);
     const [image, setImage] = useState(null);
+    const date = new Date();
+  const handleSubmit = () =>{
+    // firebase.storage().ref(`/image/${image.name}`).put(image).then(({ref})=>{
+    //   ref.getDownloadURL().then((url)=>{
+    //     console.log(url)
+    //     firebase.firestore().collection('products').add({
+    //       name,
+    //       category,
+    //       price,
+    //       url,
+    //       userId:user.uid,
+    //       createdAt:date.toDateString()
+    //     })
+    //     history.push('/')
+    //   })
+    // })
+  }
     return (
         <div>
             <section className="vh-100" style={{ backgroundColor: "#9de2ff" }}>
@@ -39,7 +56,7 @@ function Profile() {
                                             </div>
                                             <div className="d-flex pt-1">
 
-                                                <button type="button" className="btn btn-primary flex-grow-1">
+                                                <button type="button" className="btn btn-primary flex-grow-1" onClick={handleSubmit}>
                                                     Upload Image                                                </button>
                                             </div>
                                         </div>
