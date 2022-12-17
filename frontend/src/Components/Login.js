@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { userLogin } from "../redux/username"
+import Swal from "sweetalert2";
 import './LoginUser.css'
 import axios from '../axios'
 const Login = () => {
@@ -40,7 +41,11 @@ const Login = () => {
         navigate('/')
       } else {
         console.log(response.data, "kkkkkkkkkkkkkkkkkkkk");
-        alert(response.data.message)
+        Swal.fire(
+          'Error?',
+          response.data.message,
+          'question'
+        )
       }
     })
 

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate,Link } from 'react-router-dom';
-import { userLogin } from "../redux/username"
+import { useNavigate, Link } from 'react-router-dom';
+import { userLogin } from "../redux/username";
+import Swal from "sweetalert2";
 
 import axios from '../axios'
 import './SignUp.css'
@@ -34,11 +35,21 @@ const SignUp = () => {
                 password
             }
         }).then((res) => {
-            localStorage.setItem("usertoken", JSON.stringify(res.data.token))
-            localStorage.setItem("auth", JSON.stringify(res.data.auth))
-            dispatch(userLogin({ userData: email }))
+            console.log(res, "respomseeeeeeeeeeee");
+            if (res.data.auth) {
+                localStorage.setItem("usertoken", JSON.stringify(res.data.token))
+                localStorage.setItem("auth", JSON.stringify(res.data.auth))
+                dispatch(userLogin({ userData: email }))
+                navigate('/')
+            } else {
+                Swal.fire(
+                    'Error?',
+                    res.data.message,
+                    'question'
+                )
+            }
+
             console.log(res.data, "responseeeeeeeeeee signupo");
-            navigate('/')
 
         }
 

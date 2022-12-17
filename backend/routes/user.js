@@ -30,8 +30,7 @@ function verifyUser(req, res, next) {
 router.post("/register", async (req, res) => {
     let IsUser = await User.findOne({ email: req.body.email })
     if (IsUser) {
-        res.send({ message: "User Already Exists" })
-        console.log(IsUser, "user is herererrer");
+        res.send({ message: `User Already Exists With this E-mail ${req.body.email}` })
     } else {
         req.body.password = await bcrypt.hash(req.body.password, 10)
         console.log(req.body, "passsword hashed");
@@ -43,7 +42,6 @@ router.post("/register", async (req, res) => {
             if (err) {
                 res.send({ message: "something went wrong token err" })
             } else {
-                console.log(token, "from tokennnnnnnnnnn");
                 res.send({ auth: true, token: token })
             }
 
@@ -98,7 +96,7 @@ router.get("/get-products", verifyUser, async (req, res) => {
 
 router.post("/profile", async (req, res) => {
     console.log(req.body, "bodyyyyyy")
-    ab = await req
+    ab = await req.files
     console.log(req, "mfilessssssssss", ab, "mmmmmmmmmmmmmm");
     res.send({ message: "result" })
 })

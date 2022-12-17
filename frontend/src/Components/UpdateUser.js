@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { baseUrlAdmin } from "../constants/constants";
+import Swal from "sweetalert2";
 import axios from '../axios'
 import './SignUp.css'
 const UpdateUser = () => {
@@ -11,7 +12,7 @@ const UpdateUser = () => {
 
     useEffect(() => {
         getUserDetails()
-    }, [])
+    }, [name])
 
     const getUserDetails = () => {
         console.warn(params, "params")
@@ -35,7 +36,13 @@ const UpdateUser = () => {
             if (result) {
                 navigate('/adminhome')
             } else {
-                alert("no actions")
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'warning',
+                    title: 'No Changes Saved',
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
             }
         })
     }

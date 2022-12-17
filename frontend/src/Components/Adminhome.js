@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { baseUrlAdmin } from "../constants/constants";
 import { Link,Outlet } from "react-router-dom";
+import Swal from "sweetalert2";
 const Adminhome = () => {
     const [users, setUsers] = useState([]);
     useEffect(() => {
@@ -23,10 +24,22 @@ const Adminhome = () => {
         }).then((result) => {
             console.log(result.data, "rsuuuuuuuuuuuuuuu");
             if (result.data.deletedCount === 1) {
-                alert("product deleted")
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'User deleted Successfully',
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
                 getUsers();
             } else {
-                alert("product already deleted")
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'warning',
+                    title: 'Product has been already deleted',
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
             }
         })
     }

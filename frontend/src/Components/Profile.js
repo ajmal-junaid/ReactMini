@@ -30,22 +30,6 @@ function Profile() {
             console.log(err, "handlesubmit profile error");
         }
 
-
-
-        // firebase.storage().ref(`/image/${image.name}`).put(image).then(({ref})=>{
-        //   ref.getDownloadURL().then((url)=>{
-        //     console.log(url)
-        //     firebase.firestore().collection('products').add({
-        //       name,
-        //       category,
-        //       price,
-        //       url,
-        //       userId:user.uid,
-        //       createdAt:date.toDateString()
-        //     })
-        //     history.push('/')
-        //   })
-        // })
     }
     return (
         <div>
