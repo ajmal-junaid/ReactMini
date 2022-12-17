@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import {userLogin} from "../redux/username"
-import './SignUp.css'
+import { userLogin } from "../redux/username"
+import './LoginUser.css'
 import axios from '../axios'
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -14,7 +14,7 @@ const Login = () => {
     const auth = localStorage.getItem('auth')
     if (auth) {
       navigate('/')
-      
+
     }
   }, [])
   const FormSubmit = () => {
@@ -22,7 +22,7 @@ const Login = () => {
       setError(true)
       return false
     }
-    
+
     axios({
       method: 'post',
       url: 'http://localhost:3000/login',
@@ -33,59 +33,174 @@ const Login = () => {
     }).then((response) => {
       if (response.data.auth) {
         console.log(response.data, "responseeeeeeeeeloginnnnn");
-        dispatch(userLogin({userData:email}))
+        dispatch(userLogin({ userData: email }))
         localStorage.setItem("usertoken", JSON.stringify(response.data.token))
         localStorage.setItem("auth", JSON.stringify(response.data.auth))
-        
+
         navigate('/')
       } else {
         console.log(response.data, "kkkkkkkkkkkkkkkkkkkk");
-        alert(response.data)
+        alert(response.data.message)
       }
     })
-    
+
   }
   return (
     <div>
-      
-      <section className="vh-100 bg-image container-fluid">
-        <div className="mask d-flex align-items-center h-100 gradient-custom-3">
-          <div className="container h-100">
-            <div className="row d-flex justify-content-center align-items-center h-100">
-              <div className="col-12 col-md-9 col-lg-7 col-xl-6 py-5">
-                <div className="card">
-                  <div className="card-body p-5">
-                    <h2 className="text-uppercase text-center mb-5">Login Page</h2>
+      <div className="login-root">
+        <div
+          className="box-root flex-flex flex-direction--column"
+          style={{ minHeight: "100vh", flexGrow: 1 }}
+        >
+          <div className="loginbackground box-background--white padding-top--64">
+            <div className="loginbackground-gridContainer">
+              <div
+                className="box-root flex-flex"
+                style={{ gridArea: "top / start / 8 / end" }}
+              >
+                <div
+                  className="box-root"
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(white 0%, rgb(247, 250, 252) 33%)",
+                    flexGrow: 1
+                  }}
+                ></div>
+              </div>
+              <div
+                className="box-root flex-flex"
+                style={{ gridArea: "4 / 2 / auto / 5" }}
+              >
+                <div
+                  className="box-root box-divider--light-all-2 animationLeftRight tans3s"
+                  style={{ flexGrow: 1 }}
+                />
+              </div>
+              <div
+                className="box-root flex-flex"
+                style={{ gridArea: "6 / start / auto / 2" }}
+              >
+                <div
+                  className="box-root box-background--blue800"
+                  style={{ flexGrow: 1 }}
+                />
+              </div>
+              <div
+                className="box-root flex-flex"
+                style={{ gridArea: "7 / start / auto / 4" }}
+              >
+                <div
+                  className="box-root box-background--blue animationLeftRight"
+                  style={{ flexGrow: 1 }}
+                />
+              </div>
+              <div
+                className="box-root flex-flex"
+                style={{ gridArea: "8 / 4 / auto / 6" }}
+              >
+                <div
+                  className="box-root box-background--gray100 animationLeftRight tans3s"
+                  style={{ flexGrow: 1 }}
+                />
+              </div>
+              <div
+                className="box-root flex-flex"
+                style={{ gridArea: "2 / 15 / auto / end" }}
+              >
+                <div
+                  className="box-root box-background--cyan200 animationRightLeft tans4s"
+                  style={{ flexGrow: 1 }}
+                />
+              </div>
+              <div
+                className="box-root flex-flex"
+                style={{ gridArea: "3 / 14 / auto / end" }}
+              >
+                <div
+                  className="box-root box-background--blue animationRightLeft"
+                  style={{ flexGrow: 1 }}
+                />
+              </div>
+              <div
+                className="box-root flex-flex"
+                style={{ gridArea: "4 / 17 / auto / 20" }}
+              >
+                <div
+                  className="box-root box-background--gray100 animationRightLeft tans4s"
+                  style={{ flexGrow: 1 }}
+                />
+              </div>
+              <div
+                className="box-root flex-flex"
+                style={{ gridArea: "5 / 14 / auto / 17" }}
+              >
+                <div
+                  className="box-root box-divider--light-all-2 animationRightLeft tans3s"
+                  style={{ flexGrow: 1 }}
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            className="box-root padding-top--24 flex-flex flex-direction--column"
+            style={{ flexGrow: 1, zIndex: 9 }}
+          >
+            <div className="box-root padding-top--48 padding-bottom--24 flex-flex flex-justifyContent--center">
+              <h1>
+                <a rel="dofollow" className='text-dark w-25'>
+                  Login Page
+                </a>
+              </h1>
+            </div>
+            <div className="formbg-outer">
+              <div className="formbg">
+                <div className="formbg-inner padding-horizontal--48">
+                  <span className="padding-bottom--15">Sign in to your account</span>
 
-                    <div className="form-outline mb-4">
-                      <input type="email" id="form3Example3cg" value={email} onChange={(e) =>
-                        setEmail(e.target.value)
-                      } className="form-control form-control-lg" />
-                      <label className="form-label" for="form3Example3cg">Your Email</label>
-                      {error && !email && <p className="text-danger d-block">Enter valid Email</p>}
-                    </div>
+                  <div className="field padding-bottom--24">
+                    <label htmlFor="email">Email</label>
+                    {error && !email && <p className="text-danger d-block">Enter valid Email</p>}
+                    <input type="email" name="email" value={email} onChange={(e) =>
+                      setEmail(e.target.value)
+                    } />
 
-                    <div className="form-outline mb-4">
-                      <input type="password" id="form3Example4cg" value={password} onChange={(e) =>
-                        setPassword(e.target.value)
-                      } className="form-control form-control-lg" />
-                      <label className="form-label" for="form3Example4cg">Password</label>
-                      {error && !password && <p className="text-danger d-block">Enter valid password</p>}
-                    </div>
-                    <div className="d-flex justify-content-center">
-                      <button type="button" onClick={FormSubmit}
-                        className="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Login</button>
-                    </div>
-
-                    <p className="text-center text-muted mt-5 mb-0">Don't have an account? <a href="#!"
-                      className="fw-bold text-body"><u>SignUp here</u></a></p>
                   </div>
+                  <div className="field padding-bottom--24">
+                    <div className="grid--50-50">
+                      <label htmlFor="password">Password</label>
+
+                    </div>
+                    <input type="password" name="password" value={password} onChange={(e) =>
+                      setPassword(e.target.value)
+                    } />
+                    {error && !password && <p className="text-danger d-block">Enter valid password</p>}
+                  </div>
+                  <div className="field field-checkbox padding-bottom--24 flex-flex align-center">
+                    <label htmlFor="checkbox">
+                      <input type="checkbox" name="checkbox" /> Stay signed in for a
+                      week
+                    </label>
+                  </div>
+                  <div className="field padding-bottom--24">
+                    <input type="button" name="submit" defaultValue="Login" onClick={FormSubmit} />
+                  </div>
+
+                </div>
+              </div>
+              <div className="footer-link padding-top--24">
+                <span>
+                  Don't have an account? <Link className="nav-link" to="/signup">
+                    Sign-Up
+                  </Link>
+                </span>
+                <div className="listing padding-top--24 padding-bottom--24 flex-flex center-center">
+
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   )
 }

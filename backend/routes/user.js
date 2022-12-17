@@ -33,7 +33,7 @@ router.post("/register", async (req, res) => {
     console.log(user,"sogggggggggggggggggggggggggnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnupppppppppppppp");
     Jwt.sign({ user }, jwtKey, { expiresIn: 86400 }, (err, token) => {
         if (err) {
-            res.send({ auth: "false", message: "something went wrong token err" })
+            res.send({ message: "something went wrong token err" })
         }else{
             console.log(token, "from tokennnnnnnnnnn");
             res.send({ auth: true, token: token })
@@ -54,7 +54,7 @@ router.post("/login", async (req, res) => {
         if (user) {
             Jwt.sign({ user }, jwtKey, { expiresIn: 86400 }, (err, token) => {
                 if (err) {
-                    res.send({ auth: "false", message: "something went wrong token err" })
+                    res.send({ message: "something went wrong token err" })
                 } else {
                     res.send({ auth: true, token: token })
                 }
@@ -62,10 +62,10 @@ router.post("/login", async (req, res) => {
             })
 
         } else {
-            res.send({ auth: "false", message: "no user found" })
+            res.send({ message: "no user found" })
         }
     } else {
-        res.send({ auth: "false", message: "Invalid credentials" })
+        res.send({ message: "Invalid credentials" })
     }
 })
 

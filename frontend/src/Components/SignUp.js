@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 import { userLogin } from "../redux/username"
 
 import axios from '../axios'
@@ -86,7 +86,7 @@ const SignUp = () => {
                                             </div>
 
                                             <p className="text-center text-muted mt-5 mb-0">Have already an account? <a href="#!"
-                                                className="fw-bold text-body"><u>Login here</u></a></p>
+                                                className="fw-bold text-body"><u><Link to='/login' >Login here</Link></u></a></p>
 
                                         </form>
 

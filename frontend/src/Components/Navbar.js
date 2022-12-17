@@ -12,24 +12,27 @@ const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch()
   useEffect(() => {
-    let token = localStorage.getItem('usertoken')
-    console.log(token, "useeffecttttttttttttttt");
-    let {user} = jwt_decode(token);
-    console.log(user, "next oneeeeeeeee");
-    dispatch(userLogin({ userData: user?.name }))
+    let token = localStorage?.getItem('usertoken')
+    if (token) {
+      let { user } = jwt_decode(token);
+      let { name, email } = user
+      console.log(user, "next oneeeeeeeee", name, email);
+      dispatch(userLogin({ userData: name }))
+    }
+
   }, [])
 
   const logout = () => {
     localStorage.clear();
     navigate("/login");
   };
-  
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container">
           <a className="navbar-brand text-white">
-            <strong>
+            <strong className="text-primary">
               {admauth ? "Admin Dashboard" : "" || auth ? "User Dash" : ""}
             </strong>
           </a>
@@ -83,7 +86,7 @@ const Navbar = () => {
               <span className="navbar-text">
                 {" "}
                 <Link className="nav-link" onClick={logout} to="/">
-                  Logout ( <b>{userdata}</b> )
+                  Logout ( <b className="text-danger">{userdata}</b> )
                 </Link>{" "}
               </span>
             ) : (
